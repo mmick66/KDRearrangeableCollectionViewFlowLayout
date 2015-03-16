@@ -1,0 +1,420 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BE35B4BF1AB723BB00108C87 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35B4BE1AB723BB00108C87 /* AppDelegate.swift */; };
+		BE35B4C11AB723BB00108C87 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35B4C01AB723BB00108C87 /* ViewController.swift */; };
+		BE35B4C41AB723BB00108C87 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE35B4C21AB723BB00108C87 /* Main.storyboard */; };
+		BE35B4C61AB723BB00108C87 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE35B4C51AB723BB00108C87 /* Images.xcassets */; };
+		BE35B4C91AB723BB00108C87 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE35B4C71AB723BB00108C87 /* LaunchScreen.xib */; };
+		BE35B4D51AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35B4D41AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayoutTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BE35B4CF1AB723BB00108C87 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BE35B4B11AB723BB00108C87 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BE35B4B81AB723BB00108C87;
+			remoteInfo = KDRearrangeableCollectionViewFlowLayout;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BE35B4B91AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KDRearrangeableCollectionViewFlowLayout.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE35B4BD1AB723BB00108C87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BE35B4BE1AB723BB00108C87 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BE35B4C01AB723BB00108C87 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		BE35B4C31AB723BB00108C87 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BE35B4C51AB723BB00108C87 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		BE35B4C81AB723BB00108C87 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		BE35B4CE1AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KDRearrangeableCollectionViewFlowLayoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BE35B4D31AB723BB00108C87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BE35B4D41AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDRearrangeableCollectionViewFlowLayoutTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BE35B4B61AB723BB00108C87 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BE35B4CB1AB723BB00108C87 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BE35B4B01AB723BB00108C87 = {
+			isa = PBXGroup;
+			children = (
+				BE35B4BB1AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayout */,
+				BE35B4D11AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayoutTests */,
+				BE35B4BA1AB723BB00108C87 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BE35B4BA1AB723BB00108C87 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BE35B4B91AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayout.app */,
+				BE35B4CE1AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayoutTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BE35B4BB1AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayout */ = {
+			isa = PBXGroup;
+			children = (
+				BE35B4BE1AB723BB00108C87 /* AppDelegate.swift */,
+				BE35B4C01AB723BB00108C87 /* ViewController.swift */,
+				BE35B4C21AB723BB00108C87 /* Main.storyboard */,
+				BE35B4C51AB723BB00108C87 /* Images.xcassets */,
+				BE35B4C71AB723BB00108C87 /* LaunchScreen.xib */,
+				BE35B4BC1AB723BB00108C87 /* Supporting Files */,
+			);
+			path = KDRearrangeableCollectionViewFlowLayout;
+			sourceTree = "<group>";
+		};
+		BE35B4BC1AB723BB00108C87 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BE35B4BD1AB723BB00108C87 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BE35B4D11AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayoutTests */ = {
+			isa = PBXGroup;
+			children = (
+				BE35B4D41AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayoutTests.swift */,
+				BE35B4D21AB723BB00108C87 /* Supporting Files */,
+			);
+			path = KDRearrangeableCollectionViewFlowLayoutTests;
+			sourceTree = "<group>";
+		};
+		BE35B4D21AB723BB00108C87 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BE35B4D31AB723BB00108C87 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BE35B4B81AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayout */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE35B4D81AB723BB00108C87 /* Build configuration list for PBXNativeTarget "KDRearrangeableCollectionViewFlowLayout" */;
+			buildPhases = (
+				BE35B4B51AB723BB00108C87 /* Sources */,
+				BE35B4B61AB723BB00108C87 /* Frameworks */,
+				BE35B4B71AB723BB00108C87 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = KDRearrangeableCollectionViewFlowLayout;
+			productName = KDRearrangeableCollectionViewFlowLayout;
+			productReference = BE35B4B91AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayout.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BE35B4CD1AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayoutTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BE35B4DB1AB723BB00108C87 /* Build configuration list for PBXNativeTarget "KDRearrangeableCollectionViewFlowLayoutTests" */;
+			buildPhases = (
+				BE35B4CA1AB723BB00108C87 /* Sources */,
+				BE35B4CB1AB723BB00108C87 /* Frameworks */,
+				BE35B4CC1AB723BB00108C87 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BE35B4D01AB723BB00108C87 /* PBXTargetDependency */,
+			);
+			name = KDRearrangeableCollectionViewFlowLayoutTests;
+			productName = KDRearrangeableCollectionViewFlowLayoutTests;
+			productReference = BE35B4CE1AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayoutTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BE35B4B11AB723BB00108C87 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = Karmadust;
+				TargetAttributes = {
+					BE35B4B81AB723BB00108C87 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					BE35B4CD1AB723BB00108C87 = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = BE35B4B81AB723BB00108C87;
+					};
+				};
+			};
+			buildConfigurationList = BE35B4B41AB723BB00108C87 /* Build configuration list for PBXProject "KDRearrangeableCollectionViewFlowLayout" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BE35B4B01AB723BB00108C87;
+			productRefGroup = BE35B4BA1AB723BB00108C87 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BE35B4B81AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayout */,
+				BE35B4CD1AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayoutTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BE35B4B71AB723BB00108C87 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE35B4C41AB723BB00108C87 /* Main.storyboard in Resources */,
+				BE35B4C91AB723BB00108C87 /* LaunchScreen.xib in Resources */,
+				BE35B4C61AB723BB00108C87 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BE35B4CC1AB723BB00108C87 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BE35B4B51AB723BB00108C87 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE35B4C11AB723BB00108C87 /* ViewController.swift in Sources */,
+				BE35B4BF1AB723BB00108C87 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BE35B4CA1AB723BB00108C87 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE35B4D51AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayoutTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BE35B4D01AB723BB00108C87 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BE35B4B81AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayout */;
+			targetProxy = BE35B4CF1AB723BB00108C87 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		BE35B4C21AB723BB00108C87 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BE35B4C31AB723BB00108C87 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		BE35B4C71AB723BB00108C87 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BE35B4C81AB723BB00108C87 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		BE35B4D61AB723BB00108C87 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		BE35B4D71AB723BB00108C87 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BE35B4D91AB723BB00108C87 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = KDRearrangeableCollectionViewFlowLayout/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		BE35B4DA1AB723BB00108C87 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = KDRearrangeableCollectionViewFlowLayout/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		BE35B4DC1AB723BB00108C87 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = KDRearrangeableCollectionViewFlowLayoutTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KDRearrangeableCollectionViewFlowLayout.app/KDRearrangeableCollectionViewFlowLayout";
+			};
+			name = Debug;
+		};
+		BE35B4DD1AB723BB00108C87 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = KDRearrangeableCollectionViewFlowLayoutTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KDRearrangeableCollectionViewFlowLayout.app/KDRearrangeableCollectionViewFlowLayout";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BE35B4B41AB723BB00108C87 /* Build configuration list for PBXProject "KDRearrangeableCollectionViewFlowLayout" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE35B4D61AB723BB00108C87 /* Debug */,
+				BE35B4D71AB723BB00108C87 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BE35B4D81AB723BB00108C87 /* Build configuration list for PBXNativeTarget "KDRearrangeableCollectionViewFlowLayout" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE35B4D91AB723BB00108C87 /* Debug */,
+				BE35B4DA1AB723BB00108C87 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		BE35B4DB1AB723BB00108C87 /* Build configuration list for PBXNativeTarget "KDRearrangeableCollectionViewFlowLayoutTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BE35B4DC1AB723BB00108C87 /* Debug */,
+				BE35B4DD1AB723BB00108C87 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BE35B4B11AB723BB00108C87 /* Project object */;
+}
