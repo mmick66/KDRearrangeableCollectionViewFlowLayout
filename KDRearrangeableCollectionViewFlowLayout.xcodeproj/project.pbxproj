@@ -17,6 +17,7 @@
 		BE35B4E21AB7241D00108C87 /* KDRearrangeableCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35B4E11AB7241D00108C87 /* KDRearrangeableCollectionViewFlowLayout.swift */; };
 		BE35B4E41AB73A1300108C87 /* KDRearrangeableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35B4E31AB73A1300108C87 /* KDRearrangeableCollectionViewCell.swift */; };
 		BE35B4E61AB73D9F00108C87 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35B4E51AB73D9F00108C87 /* CollectionViewCell.swift */; };
+		BE35B4E91AB7502C00108C87 /* names.txt in Resources */ = {isa = PBXBuildFile; fileRef = BE35B4E81AB7502C00108C87 /* names.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		BE35B4E11AB7241D00108C87 /* KDRearrangeableCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDRearrangeableCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		BE35B4E31AB73A1300108C87 /* KDRearrangeableCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDRearrangeableCollectionViewCell.swift; sourceTree = "<group>"; };
 		BE35B4E51AB73D9F00108C87 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		BE35B4E81AB7502C00108C87 /* names.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = names.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		BE35B4BB1AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayout */ = {
 			isa = PBXGroup;
 			children = (
+				BE35B4E71AB7501C00108C87 /* data */,
 				BE35B4DE1AB723D000108C87 /* KDRearrangeableCollectionViewFlowLayout */,
 				BE35B4BE1AB723BB00108C87 /* AppDelegate.swift */,
 				BE35B4C01AB723BB00108C87 /* ViewController.swift */,
@@ -130,6 +133,14 @@
 				BE35B4E31AB73A1300108C87 /* KDRearrangeableCollectionViewCell.swift */,
 			);
 			name = KDRearrangeableCollectionViewFlowLayout;
+			sourceTree = "<group>";
+		};
+		BE35B4E71AB7501C00108C87 /* data */ = {
+			isa = PBXGroup;
+			children = (
+				BE35B4E81AB7502C00108C87 /* names.txt */,
+			);
+			name = data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,6 +226,7 @@
 				BE35B4C41AB723BB00108C87 /* Main.storyboard in Resources */,
 				BE35B4C91AB723BB00108C87 /* LaunchScreen.xib in Resources */,
 				BE35B4C61AB723BB00108C87 /* Images.xcassets in Resources */,
+				BE35B4E91AB7502C00108C87 /* names.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +441,7 @@
 				BE35B4DA1AB723BB00108C87 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BE35B4DB1AB723BB00108C87 /* Build configuration list for PBXNativeTarget "KDRearrangeableCollectionViewFlowLayoutTests" */ = {
 			isa = XCConfigurationList;
@@ -437,6 +450,7 @@
 				BE35B4DD1AB723BB00108C87 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
