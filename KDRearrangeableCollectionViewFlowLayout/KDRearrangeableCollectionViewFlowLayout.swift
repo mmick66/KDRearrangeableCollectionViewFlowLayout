@@ -34,23 +34,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
         
         }
         
-        func move(point : CGPoint) {
-            var imageViewFrame = representationImageView.frame
-            imageViewFrame.origin = CGPointMake(point.x - offset.x, point.y - offset.y)
-            representationImageView.frame = imageViewFrame
-        }
         
-        func contact(view : UIView?) -> Bool {
-            
-            if let viewToCompare = view {
-                
-                return CGRectIntersectsRect(representationImageView.frame, viewToCompare.frame)
-                
-            }
-            
-            return false
-            
-        }
     }
     
     var bundle : Bundle?
@@ -72,12 +56,13 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
     
     func setup() {
         
-        let longPressGestureRecogniser = UILongPressGestureRecognizer(target: self, action: "handleGesture:")
-        
-        longPressGestureRecogniser.minimumPressDuration = 0.3
-        longPressGestureRecogniser.delegate = self
-        
         if let collectionView = self.collectionView {
+
+            let longPressGestureRecogniser = UILongPressGestureRecognizer(target: self, action: "handleGesture:")
+        
+            longPressGestureRecogniser.minimumPressDuration = 0.3
+            longPressGestureRecogniser.delegate = self
+
             collectionView.addGestureRecognizer(longPressGestureRecogniser)
         }
     }
@@ -108,15 +93,15 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
         
         
         // bundle as a condition inlcudes collectionView and canvas being non nil so it is better to check only for this and unwrap the rest
-        if let df = self.bundle {
+        if let bundle = self.bundle {
             
             let pointInCollectionView = gestureRecognizer.locationInView(self.collectionView)
             
             
             if gestureRecognizer.state == UIGestureRecognizerState.Began {
                 
-                df.sourceCell.hidden = true
-                df.sourceCollectionView.addSubview(df.representationImageView)
+                bundle.sourceCell.hidden = true
+                bundle.sourceCollectionView.addSubview(bundle.representationImageView)
                 
                 
             }
@@ -124,23 +109,25 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
             
             if gestureRecognizer.state == UIGestureRecognizerState.Changed {
                 
-                df.move(pointInCollectionView)
+                var imageViewFrame = bundle.representationImageView.frame
+                imageViewFrame.origin = CGPointMake(pointInCollectionView.x - bundle.offset.x, pointInCollectionView.y - bundle.offset.y)
+                bundle.representationImageView.frame = imageViewFrame
                 
                 
-                if let indexPath : NSIndexPath = df.sourceCollectionView.indexPathForItemAtPoint(pointInCollectionView) {
+                if let indexPath : NSIndexPath = bundle.sourceCollectionView.indexPathForItemAtPoint(pointInCollectionView) {
                     
                     //self.checkForDraggingAtTheEdgeAndAnimatePaging(df, gestureRecognizer: gestureRecognizer)
                     
-                    if indexPath.isEqual(df.currentIndexPath) == false {
+                    if indexPath.isEqual(bundle.currentIndexPath) == false {
                         
                         // If we have a collection view controller that implements the delegate we call the method first
                         if let delegate = self.collectionView!.delegate as? KDRearrangeableCollectionViewDelegate {
-                            delegate.moveDataItem(df.currentIndexPath, toIndexPath: indexPath)
+                            delegate.moveDataItem(bundle.currentIndexPath, toIndexPath: indexPath)
                         }
                         
-                        df.sourceCollectionView.moveItemAtIndexPath(df.currentIndexPath, toIndexPath: indexPath)
+                        bundle.sourceCollectionView.moveItemAtIndexPath(bundle.currentIndexPath, toIndexPath: indexPath)
                         
-                        bundle!.currentIndexPath = indexPath
+                        self.bundle!.currentIndexPath = indexPath
                         
                     }
                     
@@ -154,14 +141,14 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
             if gestureRecognizer.state == UIGestureRecognizerState.Ended {
                 
                
-                df.sourceCell.hidden = false
-                df.representationImageView.removeFromSuperview()
+                bundle.sourceCell.hidden = false
+                bundle.representationImageView.removeFromSuperview()
                 
                 if let delegate = self.collectionView!.delegate as? KDRearrangeableCollectionViewDelegate { // if we have a proper data source then we can reload and have the data displayed correctly
-                    df.sourceCollectionView.reloadData()
+                    bundle.sourceCollectionView.reloadData()
                 }
                 
-                bundle = nil
+                self.bundle = nil
                 
                 
             }
