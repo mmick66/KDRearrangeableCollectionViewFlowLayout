@@ -83,8 +83,6 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                 println("You need to add your collection view to the view hierarchy to implement the drag and drop action")
             }
            
-            
-            
         }
         
         return bundle != nil
@@ -92,17 +90,17 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
     
     
     
-    func handleGesture(gestureRecognizer: UILongPressGestureRecognizer) -> Void {
+    func handleGesture(gesture: UILongPressGestureRecognizer) -> Void {
         
         
         
         // bundle as a condition inlcudes collectionView and canvas being non nil so it is better to check only for this and unwrap the rest
         if let bundle = self.bundle {
             
-            let dragPointOnCanvas = gestureRecognizer.locationInView(bundle.canvas)
+            let dragPointOnCanvas = gesture.locationInView(bundle.canvas)
             
             
-            if gestureRecognizer.state == UIGestureRecognizerState.Began {
+            if gesture.state == UIGestureRecognizerState.Began {
                 
                 bundle.sourceCell.hidden = true
                 bundle.canvas.addSubview(bundle.representationImageView)
@@ -110,13 +108,16 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
             }
             
             
-            if gestureRecognizer.state == UIGestureRecognizerState.Changed {
+            if gesture.state == UIGestureRecognizerState.Changed {
                 
                 var imageViewFrame = bundle.representationImageView.frame
-                imageViewFrame.origin = CGPointMake(dragPointOnCanvas.x - bundle.offset.x, dragPointOnCanvas.y - bundle.offset.y)
+                var point = CGPointZero
+                point.x = dragPointOnCanvas.x - bundle.offset.x
+                point.y = dragPointOnCanvas.y - bundle.offset.y
+                imageViewFrame.origin = point
                 bundle.representationImageView.frame = imageViewFrame
                 
-                let dragPointOnCollectionView = gestureRecognizer.locationInView(self.collectionView)
+                let dragPointOnCollectionView = gesture.locationInView(self.collectionView)
                 
                 if let indexPath : NSIndexPath = self.collectionView?.indexPathForItemAtPoint(dragPointOnCollectionView) {
                     
@@ -140,7 +141,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                 
             }
             
-            if gestureRecognizer.state == UIGestureRecognizerState.Ended {
+            if gesture.state == UIGestureRecognizerState.Ended {
                 
                
                 bundle.sourceCell.hidden = false
