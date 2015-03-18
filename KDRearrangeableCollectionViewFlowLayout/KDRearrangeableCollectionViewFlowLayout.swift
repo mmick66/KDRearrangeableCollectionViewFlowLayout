@@ -67,6 +67,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                     let representationImageView = sourceCell.snapshotViewAfterScreenUpdates(true)
                     representationImageView.frame = cellFrameOnCanvas
                     
+                    
                     let offset = CGPointMake(pointPressed.x - cellFrameOnCanvas.origin.x, pointPressed.y - cellFrameOnCanvas.origin.y)
                     
                     
@@ -104,6 +105,10 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                 
                 bundle.sourceCell.hidden = true
                 bundle.canvas.addSubview(bundle.representationImageView)
+                
+                UIView.animateWithDuration(0.5, animations: { () -> Void in
+                    bundle.representationImageView.alpha = 0.8
+                });
                 
             }
             
@@ -147,7 +152,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                 bundle.sourceCell.hidden = false
                 bundle.representationImageView.removeFromSuperview()
                 
-                if let delegate = self.collectionView!.delegate as? KDRearrangeableCollectionViewDelegate { // if we have a proper data source then we can reload and have the data displayed correctly
+                if let delegate = self.collectionView?.delegate as? KDRearrangeableCollectionViewDelegate { // if we have a proper data source then we can reload and have the data displayed correctly
                     self.collectionView!.reloadData()
                 }
                 
