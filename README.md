@@ -21,3 +21,7 @@ func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void
 ```
 
 This method will be called before the visual swap happens.
+
+## Full Tutorial ##
+
+Please have a look at the [article](http://karmadust.com/?p=5) for a full explanation.
