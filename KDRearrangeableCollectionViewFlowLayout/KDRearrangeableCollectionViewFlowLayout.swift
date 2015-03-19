@@ -10,13 +10,20 @@ import UIKit
 
 class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelegate {
     
+    var animating : Bool = false
+    
+    var collectionViewFrameInCanvas : CGRect = CGRectZero
+    
+    var hitTestRectagles = [String:CGRect]()
+    
+    // canvas can be
+    var canvas : UIView?
     
     struct Bundle {
         var offset : CGPoint = CGPointZero
         var sourceCell : UICollectionViewCell
         var representationImageView : UIView
         var currentIndexPath : NSIndexPath
-        var canvas : UIView
     }
     var bundle : Bundle?
     
@@ -41,70 +48,201 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
 
             let longPressGestureRecogniser = UILongPressGestureRecognizer(target: self, action: "handleGesture:")
         
-            longPressGestureRecogniser.minimumPressDuration = 0.3
+            longPressGestureRecogniser.minimumPressDuration = 0.2
             longPressGestureRecogniser.delegate = self
 
             collectionView.addGestureRecognizer(longPressGestureRecogniser)
+            
         }
     }
+    
+
+    override func prepareLayout() {
+        
+        super.prepareLayout()
+        
+        
+        
+        if self.canvas == nil {
+            
+            self.canvas = self.collectionView!.superview
+            
+        }
+        
+        
+        collectionViewFrameInCanvas = self.canvas!.convertRect(self.collectionView!.frame, fromView: self.collectionView)
+        
+        var leftRect : CGRect = collectionViewFrameInCanvas
+        leftRect.size.width = 20.0
+        hitTestRectagles["left"] = leftRect
+        
+        var topRect : CGRect = collectionViewFrameInCanvas
+        topRect.size.height = 20.0
+        hitTestRectagles["top"] = topRect
+        
+        var rightRect : CGRect = collectionViewFrameInCanvas
+        rightRect.origin.x = rightRect.size.width - 20.0
+        rightRect.size.width = 20.0
+        hitTestRectagles["right"] = rightRect
+        
+        var bottomRect : CGRect = collectionViewFrameInCanvas
+        bottomRect.origin.y = rightRect.size.height - 20.0
+        bottomRect.size.height = 20.0
+        hitTestRectagles["bottom"] = bottomRect
+        
+        
+    }
+    
+    
     
     // MARK: - UIGestureRecognizerDelegate
    
     func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         
-        if let collectionView = self.collectionView {
+        if let ca = self.canvas {
             
-            if  let canvas = collectionView.superview {
+            if let cv = self.collectionView {
                 
-                let pointPressed = gestureRecognizer.locationInView(canvas)
+                let pointPressedInCanvas = gestureRecognizer.locationInView(ca)
                 
-                if let indexPath = collectionView.indexPathForItemAtPoint(pointPressed) {
+                for cell in cv.visibleCells() as [UICollectionViewCell] {
                     
-                    let sourceCell = collectionView.cellForItemAtIndexPath(indexPath) as UICollectionViewCell!
+                    let cellInCanvasFrame = ca.convertRect(cell.frame, fromView: cv)
                     
-                    let cellFrameOnCanvas = collectionView.convertRect(sourceCell.frame, toView: canvas)
-                    
-                    let representationImageView = sourceCell.snapshotViewAfterScreenUpdates(true)
-                    representationImageView.frame = cellFrameOnCanvas
-                    
-                    
-                    let offset = CGPointMake(pointPressed.x - cellFrameOnCanvas.origin.x, pointPressed.y - cellFrameOnCanvas.origin.y)
-                    
-                    
-                    bundle = Bundle(offset: offset,
-                        sourceCell: sourceCell,
-                        representationImageView: representationImageView,
-                        currentIndexPath: indexPath,
-                        canvas: canvas)
+                    if CGRectContainsPoint(cellInCanvasFrame, pointPressedInCanvas ) {
+                        
+                        let representationImage = cell.snapshotViewAfterScreenUpdates(true)
+                        representationImage.frame = cellInCanvasFrame
+                        
+                        let offset = CGPointMake(pointPressedInCanvas.x - cellInCanvasFrame.origin.x, pointPressedInCanvas.y - cellInCanvasFrame.origin.y)
+                        
+                        let indexPath : NSIndexPath = cv.indexPathForCell(cell as UICollectionViewCell)!
+                        
+                        self.bundle = Bundle(offset: offset, sourceCell: cell, representationImageView:representationImage, currentIndexPath: indexPath)
+                        
+                        
+                        break
+                    }
                     
                 }
                 
             }
-            else {
-                println("You need to add your collection view to the view hierarchy to implement the drag and drop action")
-            }
-           
+            
         }
-        
-        return bundle != nil
+        return (self.bundle != nil)
     }
     
     
     
-    func handleGesture(gesture: UILongPressGestureRecognizer) -> Void {
+    func checkForDraggingAtTheEdgeAndAnimatePaging(gestureRecognizer: UILongPressGestureRecognizer) {
         
+        if self.animating == true {
+            return
+        }
         
-        
-        // bundle as a condition inlcudes collectionView and canvas being non nil so it is better to check only for this and unwrap the rest
         if let bundle = self.bundle {
             
-            let dragPointOnCanvas = gesture.locationInView(bundle.canvas)
+            
+            let pointPressedInCanvas = gestureRecognizer.locationInView(self.canvas)
+            
+           
+            var nextPageRect : CGRect = self.collectionView!.bounds
+            
+            if self.scrollDirection == UICollectionViewScrollDirection.Horizontal {
+                
+                if CGRectIntersectsRect(bundle.representationImageView.frame, hitTestRectagles["left"]!) {
+                   
+                    nextPageRect.origin.x -= nextPageRect.size.width
+                    
+                    if nextPageRect.origin.x < 0.0 {
+                        
+                        nextPageRect.origin.x = 0.0
+                        
+                    }
+                    
+                }
+                else if CGRectIntersectsRect(bundle.representationImageView.frame, hitTestRectagles["right"]!) {
+                  
+                    nextPageRect.origin.x += nextPageRect.size.width
+                    
+                    if nextPageRect.origin.x + nextPageRect.size.width > self.collectionView!.contentSize.width {
+                        
+                        nextPageRect.origin.x = self.collectionView!.contentSize.width - nextPageRect.size.width
+                        
+                    }
+                }
+                
+                
+            }
+            else if self.scrollDirection == UICollectionViewScrollDirection.Vertical {
+                
+                if CGRectIntersectsRect(bundle.representationImageView.frame, hitTestRectagles["top"]!) {
+                    
+                    
+                    nextPageRect.origin.y -= nextPageRect.size.height
+                    
+                    if nextPageRect.origin.y < 0.0 {
+                        
+                        nextPageRect.origin.y = 0.0
+                        
+                    }
+                    
+                }
+                else if CGRectIntersectsRect(bundle.representationImageView.frame, hitTestRectagles["bottom"]!) {
+                   
+                    nextPageRect.origin.y += nextPageRect.size.height
+                    
+                    
+                    if nextPageRect.origin.y + nextPageRect.size.height > self.collectionView!.contentSize.height {
+                        
+                        nextPageRect.origin.y = self.collectionView!.contentSize.height - nextPageRect.size.height
+                        
+                    }
+                }
+                
+                
+            }
+            
+            if !CGRectEqualToRect(nextPageRect, self.collectionView!.bounds){
+                
+                
+                let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.8 * Double(NSEC_PER_SEC)))
+                
+                dispatch_after(delayTime, dispatch_get_main_queue(), {
+                    
+                    self.animating = false
+                    
+                    self.handleGesture(gestureRecognizer)
+                    
+                    self.checkForDraggingAtTheEdgeAndAnimatePaging(gestureRecognizer)
+                    
+                    
+                });
+                
+                self.animating = true
+                
+                
+                self.collectionView!.scrollRectToVisible(nextPageRect, animated: true)
+                
+            }
+            
+        }
+        
+      
+    }
+    
+    func handleGesture(gesture: UILongPressGestureRecognizer) -> Void {
+        
+    
+        if let bundle = self.bundle {
+            
+            let dragPointOnCanvas = gesture.locationInView(self.canvas)
             
             
             if gesture.state == UIGestureRecognizerState.Began {
                 
                 bundle.sourceCell.hidden = true
-                bundle.canvas.addSubview(bundle.representationImageView)
+                self.canvas?.addSubview(bundle.representationImageView)
                 
                 UIView.animateWithDuration(0.5, animations: { () -> Void in
                     bundle.representationImageView.alpha = 0.8
@@ -115,6 +253,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
             
             if gesture.state == UIGestureRecognizerState.Changed {
                 
+                // Update the representation image
                 var imageViewFrame = bundle.representationImageView.frame
                 var point = CGPointZero
                 point.x = dragPointOnCanvas.x - bundle.offset.x
@@ -122,11 +261,24 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                 imageViewFrame.origin = point
                 bundle.representationImageView.frame = imageViewFrame
                 
+                if self.animating == true {
+                    return
+                }
+                
                 let dragPointOnCollectionView = gesture.locationInView(self.collectionView)
+                
+                
                 
                 if let indexPath : NSIndexPath = self.collectionView?.indexPathForItemAtPoint(dragPointOnCollectionView) {
                     
-                    //self.checkForDraggingAtTheEdgeAndAnimatePaging(df, gestureRecognizer: gestureRecognizer)
+                    println("\(dragPointOnCollectionView), \(indexPath)")
+                    
+                    self.checkForDraggingAtTheEdgeAndAnimatePaging(gesture)
+                    
+                    if self.animating == true {
+                        return
+                    }
+                    
                     
                     if indexPath.isEqual(bundle.currentIndexPath) == false {
                         
