@@ -15,9 +15,14 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
     var collectionViewFrameInCanvas : CGRect = CGRectZero
     
     var hitTestRectagles = [String:CGRect]()
-    
-    // canvas can be
-    var canvas : UIView?
+  
+    var canvas : UIView? {
+        didSet {
+            if canvas != nil {
+                self.calculateBorders()
+            }
+        }
+    }
     
     struct Bundle {
         var offset : CGPoint = CGPointZero
@@ -53,46 +58,58 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
 
             collectionView.addGestureRecognizer(longPressGestureRecogniser)
             
+            if self.canvas == nil {
+                
+                self.canvas = self.collectionView!.superview
+                
+            }
+            
+            
         }
     }
     
-
     override func prepareLayout() {
-        
         super.prepareLayout()
+        self.calculateBorders()
+    }
+    
+    private func calculateBorders() {
         
-        
-        
-        if self.canvas == nil {
+        if let collectionView = self.collectionView {
             
-            self.canvas = self.collectionView!.superview
+            collectionViewFrameInCanvas = collectionView.frame
+            
+            
+            if self.canvas != collectionView.superview {
+                collectionViewFrameInCanvas = self.canvas!.convertRect(collectionViewFrameInCanvas, fromView: collectionView)
+            }
+            
+            
+            var leftRect : CGRect = collectionViewFrameInCanvas
+            leftRect.size.width = 20.0
+            hitTestRectagles["left"] = leftRect
+            
+            var topRect : CGRect = collectionViewFrameInCanvas
+            topRect.size.height = 20.0
+            hitTestRectagles["top"] = topRect
+            
+            var rightRect : CGRect = collectionViewFrameInCanvas
+            rightRect.origin.x = rightRect.size.width - 20.0
+            rightRect.size.width = 20.0
+            hitTestRectagles["right"] = rightRect
+            
+            var bottomRect : CGRect = collectionViewFrameInCanvas
+            bottomRect.origin.y = bottomRect.origin.y + rightRect.size.height - 20.0
+            bottomRect.size.height = 20.0
+            hitTestRectagles["bottom"] = bottomRect
+            
+           
+            
             
         }
         
         
-        collectionViewFrameInCanvas = self.canvas!.convertRect(self.collectionView!.frame, fromView: self.collectionView)
-        
-        var leftRect : CGRect = collectionViewFrameInCanvas
-        leftRect.size.width = 20.0
-        hitTestRectagles["left"] = leftRect
-        
-        var topRect : CGRect = collectionViewFrameInCanvas
-        topRect.size.height = 20.0
-        hitTestRectagles["top"] = topRect
-        
-        var rightRect : CGRect = collectionViewFrameInCanvas
-        rightRect.origin.x = rightRect.size.width - 20.0
-        rightRect.size.width = 20.0
-        hitTestRectagles["right"] = rightRect
-        
-        var bottomRect : CGRect = collectionViewFrameInCanvas
-        bottomRect.origin.y = rightRect.size.height - 20.0
-        bottomRect.size.height = 20.0
-        hitTestRectagles["bottom"] = bottomRect
-        
-        
     }
-    
     
     
     // MARK: - UIGestureRecognizerDelegate
@@ -176,6 +193,9 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
             }
             else if self.scrollDirection == UICollectionViewScrollDirection.Vertical {
                 
+                let rect = hitTestRectagles["top"]
+                println("\(rect) collides with \(bundle.representationImageView.frame)")
+                
                 if CGRectIntersectsRect(bundle.representationImageView.frame, hitTestRectagles["top"]!) {
                     
                     
@@ -214,7 +234,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                     
                     self.handleGesture(gestureRecognizer)
                     
-                    self.checkForDraggingAtTheEdgeAndAnimatePaging(gestureRecognizer)
+                    //self.checkForDraggingAtTheEdgeAndAnimatePaging(gestureRecognizer)
                     
                     
                 });
@@ -271,7 +291,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                 
                 if let indexPath : NSIndexPath = self.collectionView?.indexPathForItemAtPoint(dragPointOnCollectionView) {
                     
-                    println("\(dragPointOnCollectionView), \(indexPath)")
+                    // println("Drag @ \(dragPointOnCollectionView.y), with IndexPath: \(indexPath.item)")
                     
                     self.checkForDraggingAtTheEdgeAndAnimatePaging(gesture)
                     
