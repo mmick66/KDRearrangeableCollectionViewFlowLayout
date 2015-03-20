@@ -194,7 +194,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
             else if self.scrollDirection == UICollectionViewScrollDirection.Vertical {
                 
                 let rect = hitTestRectagles["top"]
-                println("\(rect) collides with \(bundle.representationImageView.frame)")
+                
                 
                 if CGRectIntersectsRect(bundle.representationImageView.frame, hitTestRectagles["top"]!) {
                     
@@ -233,8 +233,6 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                     self.animating = false
                     
                     self.handleGesture(gestureRecognizer)
-                    
-                    //self.checkForDraggingAtTheEdgeAndAnimatePaging(gestureRecognizer)
                     
                     
                 });
@@ -281,23 +279,15 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                 imageViewFrame.origin = point
                 bundle.representationImageView.frame = imageViewFrame
                 
-                if self.animating == true {
-                    return
-                }
                 
                 let dragPointOnCollectionView = gesture.locationInView(self.collectionView)
                 
                 
-                
                 if let indexPath : NSIndexPath = self.collectionView?.indexPathForItemAtPoint(dragPointOnCollectionView) {
                     
-                    // println("Drag @ \(dragPointOnCollectionView.y), with IndexPath: \(indexPath.item)")
+                    
                     
                     self.checkForDraggingAtTheEdgeAndAnimatePaging(gesture)
-                    
-                    if self.animating == true {
-                        return
-                    }
                     
                     
                     if indexPath.isEqual(bundle.currentIndexPath) == false {
