@@ -122,7 +122,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                 
                 let pointPressedInCanvas = gestureRecognizer.locationInView(ca)
                 
-                for cell in cv.visibleCells() as [UICollectionViewCell] {
+                for cell in cv.visibleCells() as! [UICollectionViewCell] {
                     
                     let cellInCanvasFrame = ca.convertRect(cell.frame, fromView: cv)
                     

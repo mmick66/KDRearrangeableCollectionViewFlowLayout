@@ -55,7 +55,7 @@ class ViewController: UIViewController, KDRearrangeableCollectionViewDelegate, U
     
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as CollectionViewCell
+        let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as! CollectionViewCell
         let name = self.data[indexPath.item]
         cell.titleLabel.text = name
         return cell
