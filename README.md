@@ -10,9 +10,7 @@ At a minimum, just set the layout of your collection view to be a KDRearrangeabl
 
 To fully implement the class you need to make your delegate a KDRearrangeableCollectionViewDelegate and implement its method like so:
 
-```
-#!swift
-
+```Swift
 func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void {
     let customObject = collectionViewDataArray[fromIndexPath.item]
     collectionViewDataArray[fromIndexPath.item] = collectionViewDataArray[toIndexPath.item]
