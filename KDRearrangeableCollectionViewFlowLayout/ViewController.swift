@@ -21,7 +21,7 @@ class ViewController: UIViewController, KDRearrangeableCollectionViewDelegate, U
         if let path = NSBundle.mainBundle().pathForResource("names", ofType: "txt") {
             
             
-            if let content = String(contentsOfFile:path, encoding: NSUTF8StringEncoding, error: nil) {
+            if let content = try? String(contentsOfFile:path, encoding: NSUTF8StringEncoding) {
                 
                 array = content.componentsSeparatedByString("\n") as [String]
                 

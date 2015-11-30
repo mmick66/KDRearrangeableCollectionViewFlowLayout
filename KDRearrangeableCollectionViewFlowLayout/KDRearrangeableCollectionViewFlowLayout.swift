@@ -38,7 +38,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
         self.setup()
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -122,11 +122,20 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                 
                 let pointPressedInCanvas = gestureRecognizer.locationInView(ca)
                 
-                for cell in cv.visibleCells() as! [UICollectionViewCell] {
+                for cell in cv.visibleCells() {
                     
                     let cellInCanvasFrame = ca.convertRect(cell.frame, fromView: cv)
                     
                     if CGRectContainsPoint(cellInCanvasFrame, pointPressedInCanvas ) {
+                        
+                        // apply any transformations to the cell
+                        
+                        if let kdcell = cell as? KDRearrangeableCollectionViewCell {
+                            
+                            kdcell.dragging = true
+                        }
+                        
+                        
                         
                         let representationImage = cell.snapshotViewAfterScreenUpdates(true)
                         representationImage.frame = cellInCanvasFrame
@@ -159,9 +168,6 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
         
         if let bundle = self.bundle {
             
-            
-            let pointPressedInCanvas = gestureRecognizer.locationInView(self.canvas)
-            
            
             var nextPageRect : CGRect = self.collectionView!.bounds
             
@@ -192,8 +198,6 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                 
             }
             else if self.scrollDirection == UICollectionViewScrollDirection.Vertical {
-                
-                let rect = hitTestRectagles["top"]
                 
                 
                 if CGRectIntersectsRect(bundle.representationImageView.frame, hitTestRectagles["top"]!) {
@@ -261,10 +265,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                 
                 bundle.sourceCell.hidden = true
                 self.canvas?.addSubview(bundle.representationImageView)
-                
-                UIView.animateWithDuration(0.5, animations: { () -> Void in
-                    bundle.representationImageView.alpha = 0.8
-                });
+
                 
             }
             
@@ -310,11 +311,15 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
             
             if gesture.state == UIGestureRecognizerState.Ended {
                 
-               
                 bundle.sourceCell.hidden = false
+                
+                if let kdcell = bundle.sourceCell as? KDRearrangeableCollectionViewCell {
+                    kdcell.dragging = false
+                }
+                
                 bundle.representationImageView.removeFromSuperview()
                 
-                if let delegate = self.collectionView?.delegate as? KDRearrangeableCollectionViewDelegate { // if we have a proper data source then we can reload and have the data displayed correctly
+                if let _ = self.collectionView?.delegate as? KDRearrangeableCollectionViewDelegate { // if we have a proper data source then we can reload and have the data displayed correctly
                     self.collectionView!.reloadData()
                 }
                 

@@ -12,11 +12,13 @@ class KDRearrangeableCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var titleLabel: UILabel!
     
+    var baseBackgroundColor : UIColor?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -25,9 +27,22 @@ class KDRearrangeableCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
     }
     
+    
+    
     var dragging : Bool = false {
+
         didSet {
             
+            if dragging == true {
+                
+                self.baseBackgroundColor = self.backgroundColor
+                self.backgroundColor = UIColor.redColor()
+                
+            } else {
+                
+                self.backgroundColor = self.baseBackgroundColor
+                
+            }
         }
     }
     

@@ -18,5 +18,7 @@ class CollectionViewCell: KDRearrangeableCollectionViewCell {
         self.clipsToBounds = true
     }
     
+    
+    
 
 }
