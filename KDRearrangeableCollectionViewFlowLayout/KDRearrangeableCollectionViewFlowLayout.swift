@@ -135,9 +135,14 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                             kdcell.dragging = true
                         }
                         
+                    
+                        UIGraphicsBeginImageContextWithOptions(cell.bounds.size, cell.opaque, 0)
+                        cell.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+                        let img = UIGraphicsGetImageFromCurrentImageContext()
+                        UIGraphicsEndImageContext()
                         
+                        let representationImage = UIImageView(image: img)
                         
-                        let representationImage = cell.snapshotViewAfterScreenUpdates(true)
                         representationImage.frame = cellInCanvasFrame
                         
                         let offset = CGPointMake(pointPressedInCanvas.x - cellInCanvasFrame.origin.x, pointPressedInCanvas.y - cellInCanvasFrame.origin.y)
