@@ -1,6 +1,10 @@
 ## KDRearrangeableCollectionViewFlowLayout ##
 
-This is a simple implementation of a drag and rearrange collection view through its layout
+This is a simple implementation of a drag and rearrange collection view through its layout. It works for UICollectionViews with multiple sections.
+
+Video Demo: [Here](https://v.usetapes.com/U5UrT2ePsO)
+
+Tip: For drag and drop **between** multiple collection views look at the project [here](https://github.com/mmick66/KDDragAndDropCollectionView).
 
 ### Installation ###
 
@@ -20,6 +24,6 @@ func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void
 
 This method will be called before the visual swap happens.
 
-### Full Tutorial ###
+### Make One Yourself ###
 
 Please have a look at the [article](http://karmadust.com/?p=5) for a full explanation.
