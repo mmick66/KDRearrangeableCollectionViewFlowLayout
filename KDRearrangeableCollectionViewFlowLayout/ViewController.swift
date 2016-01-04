@@ -11,27 +11,41 @@ import UIKit
 class ViewController: UIViewController, KDRearrangeableCollectionViewDelegate, UICollectionViewDataSource {
     
     
-
     @IBOutlet weak var collectionView: UICollectionView!
     
-    lazy var data : [String] = {
+    lazy var data : [[String]] = {
         
-        var array = [String]()
+        var array = [[String]]()
         
         if let path = NSBundle.mainBundle().pathForResource("names", ofType: "txt") {
             
-            
             if let content = try? String(contentsOfFile:path, encoding: NSUTF8StringEncoding) {
                 
-                array = content.componentsSeparatedByString("\n") as [String]
+                let allNamesArray = content.componentsSeparatedByString("\n") as [String]
                 
-                array = array.map({ (row : String) -> String in
+                var index = 0
+                var section = 0
+                
+                for name in allNamesArray {
                     
+                    if array.count <= section {
+                        array.append([String]())
+                    }
                     
-                    let range = NSString(string: row).rangeOfString(" ")
+                    let range = NSString(string: name).rangeOfString(" ")
                     
-                    return NSString(string: row).substringToIndex(range.location) as String
-                })
+                    let clean = NSString(string: name).substringToIndex(range.location) as String
+                    
+                    array[section].append(clean)
+                    
+                    if index == 20 {
+                        index = 0
+                        section++
+                    } else {
+                        index++
+                    }
+                    
+                }
                 
                 
             }
@@ -44,32 +58,47 @@ class ViewController: UIViewController, KDRearrangeableCollectionViewDelegate, U
         
         super.viewDidLoad()
         
-        
-        
     }
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        
+        return self.data.count
+    }
+
 
     // MARK: - UICollectionViewDataSource
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.data.count
+        return self.data[section].count
     }
     
 
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
         let cell = self.collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as! CollectionViewCell
-        let name = self.data[indexPath.item]
+        let name = self.data[indexPath.section][indexPath.item]
         cell.titleLabel.text = name
         return cell
+        
     }
     
     
     // MARK: - KDRearrangeableCollectionViewDelegate
     func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void {
         
-        let name = self.data[fromIndexPath.item]
+        print("\(fromIndexPath.section):\(fromIndexPath.item) to \(toIndexPath.section):\(toIndexPath.item)")
         
-        self.data.removeAtIndex(fromIndexPath.item)
+        let name = self.data[fromIndexPath.section][fromIndexPath.item]
         
-        self.data.insert(name, atIndex: toIndexPath.item)
+//        self.data[fromIndexPath.section][fromIndexPath.item] = self.data[toIndexPath.section][toIndexPath.item]
+//        
+//        self.data[toIndexPath.section][toIndexPath.item] = name
+        
+        
+        
+        
+        self.data[fromIndexPath.section].removeAtIndex(fromIndexPath.item)
+        
+        self.data[toIndexPath.section].insert(name, atIndex: toIndexPath.item)
         
     }
 
