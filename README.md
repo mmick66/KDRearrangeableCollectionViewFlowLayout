@@ -6,19 +6,23 @@ Video Demo: [Here](https://v.usetapes.com/U5UrT2ePsO)
 
 Tip: For drag and drop **between** multiple collection views look at the project [here](https://github.com/mmick66/KDDragAndDropCollectionView).
 
-### Installation ###
+### Quick Guide ###
 
-At a minimum, just set the layout of your collection view to be a KDRearrangeableCollectionViewFlowLayout. Do this on a storyboard by selecting the layout component and changing the class name, not by changing the layout to custom by selecting the collection view. In this way you will maintain the ability to edit the size values on the storyboard.
+1. Add the *KDRearrangeableCollectionViewFlowLayout.swift* file to your project (it is the only file you need).
+2. Set the layout of your UICollectionView to be the one in the file above. This can be done either programmatically or through the Storyboard.
+3. Make the data source of your UICollectionView to be *KDRearrangeableCollectionViewDelegate* subclass and implement the only method there.
 
-### Data Driven ###
+```Swift
+func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void
+```
 
-To fully implement the class you need to make your delegate a KDRearrangeableCollectionViewDelegate and implement its method like so:
+An exmple implementation for a multisectioned UICollectionView is here:
 
 ```Swift
 func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void {
-    let customObject = collectionViewDataArray[fromIndexPath.item]
-    collectionViewDataArray[fromIndexPath.item] = collectionViewDataArray[toIndexPath.item]
-    collectionViewDataArray[toIndexPath.item] = customObject
+    let name = self.data[fromIndexPath.section][fromIndexPath.item]
+    self.data[fromIndexPath.section].removeAtIndex(fromIndexPath.item)
+    self.data[toIndexPath.section].insert(name, atIndex: toIndexPath.item)
 }
 ```
 
