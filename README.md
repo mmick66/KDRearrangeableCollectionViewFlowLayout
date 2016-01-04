@@ -1,6 +1,6 @@
 ## KDRearrangeableCollectionViewFlowLayout ##
 
-This is a simple implementation of a drag and rearrange collection view through its layout
+This is a simple implementation of a drag and rearrange collection view through its layout. For drag and drop between collection views look [here](https://github.com/mmick66/KDDragAndDropCollectionView)
 
 ### Installation ###
 
