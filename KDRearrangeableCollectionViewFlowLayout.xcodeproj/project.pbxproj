@@ -13,7 +13,6 @@
 		BE35B4C61AB723BB00108C87 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE35B4C51AB723BB00108C87 /* Images.xcassets */; };
 		BE35B4C91AB723BB00108C87 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE35B4C71AB723BB00108C87 /* LaunchScreen.xib */; };
 		BE35B4D51AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35B4D41AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayoutTests.swift */; };
-		BE35B4E01AB723DB00108C87 /* KDRearrangeableCollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35B4DF1AB723DB00108C87 /* KDRearrangeableCollectionViewDelegate.swift */; };
 		BE35B4E21AB7241D00108C87 /* KDRearrangeableCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35B4E11AB7241D00108C87 /* KDRearrangeableCollectionViewFlowLayout.swift */; };
 		BE35B4E41AB73A1300108C87 /* KDRearrangeableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35B4E31AB73A1300108C87 /* KDRearrangeableCollectionViewCell.swift */; };
 		BE35B4E61AB73D9F00108C87 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE35B4E51AB73D9F00108C87 /* CollectionViewCell.swift */; };
@@ -41,7 +40,6 @@
 		BE35B4CE1AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KDRearrangeableCollectionViewFlowLayoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE35B4D31AB723BB00108C87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE35B4D41AB723BB00108C87 /* KDRearrangeableCollectionViewFlowLayoutTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KDRearrangeableCollectionViewFlowLayoutTests.swift; sourceTree = "<group>"; };
-		BE35B4DF1AB723DB00108C87 /* KDRearrangeableCollectionViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDRearrangeableCollectionViewDelegate.swift; sourceTree = "<group>"; };
 		BE35B4E11AB7241D00108C87 /* KDRearrangeableCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDRearrangeableCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		BE35B4E31AB73A1300108C87 /* KDRearrangeableCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDRearrangeableCollectionViewCell.swift; sourceTree = "<group>"; };
 		BE35B4E51AB73D9F00108C87 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
@@ -128,7 +126,6 @@
 		BE35B4DE1AB723D000108C87 /* KDRearrangeableCollectionViewFlowLayout */ = {
 			isa = PBXGroup;
 			children = (
-				BE35B4DF1AB723DB00108C87 /* KDRearrangeableCollectionViewDelegate.swift */,
 				BE35B4E11AB7241D00108C87 /* KDRearrangeableCollectionViewFlowLayout.swift */,
 				BE35B4E31AB73A1300108C87 /* KDRearrangeableCollectionViewCell.swift */,
 			);
@@ -250,7 +247,6 @@
 				BE35B4BF1AB723BB00108C87 /* AppDelegate.swift in Sources */,
 				BE35B4E61AB73D9F00108C87 /* CollectionViewCell.swift in Sources */,
 				BE35B4E41AB73A1300108C87 /* KDRearrangeableCollectionViewCell.swift in Sources */,
-				BE35B4E01AB723DB00108C87 /* KDRearrangeableCollectionViewDelegate.swift in Sources */,
 				BE35B4E21AB7241D00108C87 /* KDRearrangeableCollectionViewFlowLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

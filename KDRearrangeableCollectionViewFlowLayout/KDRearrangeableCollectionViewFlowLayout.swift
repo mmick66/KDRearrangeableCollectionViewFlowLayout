@@ -8,6 +8,10 @@
 
 import UIKit
 
+@objc protocol KDRearrangeableCollectionViewDelegate : UICollectionViewDelegate {
+    func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void
+}
+
 class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelegate {
     
     var animating : Bool = false

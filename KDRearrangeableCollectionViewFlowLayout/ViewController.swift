@@ -85,16 +85,7 @@ class ViewController: UIViewController, KDRearrangeableCollectionViewDelegate, U
     // MARK: - KDRearrangeableCollectionViewDelegate
     func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void {
         
-        print("\(fromIndexPath.section):\(fromIndexPath.item) to \(toIndexPath.section):\(toIndexPath.item)")
-        
         let name = self.data[fromIndexPath.section][fromIndexPath.item]
-        
-//        self.data[fromIndexPath.section][fromIndexPath.item] = self.data[toIndexPath.section][toIndexPath.item]
-//        
-//        self.data[toIndexPath.section][toIndexPath.item] = name
-        
-        
-        
         
         self.data[fromIndexPath.section].removeAtIndex(fromIndexPath.item)
         
