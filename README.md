@@ -2,6 +2,8 @@
 
 This is a simple implementation of a drag and rearrange collection view through its layout. It works for UICollectionViews with multiple sections.
 
+Video Demo: [Here](https://v.usetapes.com/U5UrT2ePsO)
+
 Tip: For drag and drop **between** multiple collection views look at the project [here](https://github.com/mmick66/KDDragAndDropCollectionView).
 
 ### Installation ###
