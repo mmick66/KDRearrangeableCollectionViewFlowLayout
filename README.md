@@ -19,7 +19,7 @@ Tip: For drag and drop **between** multiple collection views look at the project
 func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void
 ```
 
-An exmple implementation for a multisectioned UICollectionView is here:
+An example implementation for a multisectioned UICollectionView is here:
 
 ```Swift
 func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void {
@@ -28,6 +28,9 @@ func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void
     self.data[toIndexPath.section].insert(name, atIndex: toIndexPath.item)
 }
 ```
+
+#### KDRearrangeableCollectionViewCell
+Another class that comes with this package is KDRearrangeableCollectionViewCell. It is a subclass of UICollectionViewCell and it implements a boolean property called 'dragging'. If you choose to make the cells of your collection view a subclass of KDRearrangeableCollectionViewCell this property will be set upon the start and end of the dragging and by overriding it you can set the style of the snapshot image that will be dragged around.
 
 This method will be called before the visual swap happens.
 
