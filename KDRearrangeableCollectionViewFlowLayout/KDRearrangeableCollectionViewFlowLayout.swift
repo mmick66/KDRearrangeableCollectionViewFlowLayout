@@ -12,6 +12,8 @@ import UIKit
     func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void
 }
 
+
+
 class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelegate {
     
     var animating : Bool = false
@@ -120,9 +122,8 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
    
     func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         
-        if let ca = self.canvas {
-            
-            if let cv = self.collectionView {
+        if  let ca = self.canvas,
+            let cv = self.collectionView{
                 
                 let pointPressedInCanvas = gestureRecognizer.locationInView(ca)
                 
@@ -132,14 +133,12 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                     
                     if CGRectContainsPoint(cellInCanvasFrame, pointPressedInCanvas ) {
                         
-                        // apply any transformations to the cell
-                        
                         if let kdcell = cell as? KDRearrangeableCollectionViewCell {
-                            
+                            // Override he dragging setter to apply and change in style that you want
                             kdcell.dragging = true
                         }
                         
-                    
+                        
                         UIGraphicsBeginImageContextWithOptions(cell.bounds.size, cell.opaque, 0)
                         cell.layer.renderInContext(UIGraphicsGetCurrentContext()!)
                         let img = UIGraphicsGetImageFromCurrentImageContext()
@@ -160,10 +159,9 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                     }
                     
                 }
-                
-            }
             
         }
+        
         return (self.bundle != nil)
     }
     
@@ -344,3 +342,8 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
     }
     
 }
+
+
+
+
+
