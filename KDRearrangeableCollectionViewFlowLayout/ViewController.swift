@@ -83,7 +83,7 @@ class ViewController: UIViewController, KDRearrangeableCollectionViewDelegate, U
     
     
     // MARK: - KDRearrangeableCollectionViewDelegate
-    func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void {
+    func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) {
         
         let name = self.data[fromIndexPath.section][fromIndexPath.item]
         
@@ -94,4 +94,7 @@ class ViewController: UIViewController, KDRearrangeableCollectionViewDelegate, U
     }
 
 }
+
+
+
 

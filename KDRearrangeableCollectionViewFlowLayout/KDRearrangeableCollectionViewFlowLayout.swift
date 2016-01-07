@@ -328,7 +328,8 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                 
                 bundle.representationImageView.removeFromSuperview()
                 
-                if let _ = self.collectionView?.delegate as? KDRearrangeableCollectionViewDelegate { // if we have a proper data source then we can reload and have the data displayed correctly
+                // if we have a proper data source then we can reload and have the data displayed correctly
+                if let cv = self.collectionView where cv.delegate is KDRearrangeableCollectionViewDelegate {
                     self.collectionView!.reloadData()
                 }
                 
