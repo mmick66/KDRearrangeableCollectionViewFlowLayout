@@ -18,6 +18,8 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
     
     var animating : Bool = false
     
+    var draggable : Bool = true
+    
     var collectionViewFrameInCanvas : CGRect = CGRectZero
     
     var hitTestRectagles = [String:CGRect]()
@@ -122,8 +124,12 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
    
     func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
         
+        if draggable == false {
+            return false
+        }
+        
         if  let ca = self.canvas,
-            let cv = self.collectionView{
+            let cv = self.collectionView {
                 
                 let pointPressedInCanvas = gestureRecognizer.locationInView(ca)
                 
@@ -263,78 +269,95 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
     func handleGesture(gesture: UILongPressGestureRecognizer) -> Void {
         
     
-        if let bundle = self.bundle {
-            
-            let dragPointOnCanvas = gesture.locationInView(self.canvas)
-            
-            
-            if gesture.state == UIGestureRecognizerState.Began {
-                
-                bundle.sourceCell.hidden = true
-                self.canvas?.addSubview(bundle.representationImageView)
+        guard let bundle = self.bundle else {
+            return
+        }
 
-                
+        
+        func endDraggingAction(bundle: Bundle) {
+            
+            bundle.sourceCell.hidden = false
+            
+            if let kdcell = bundle.sourceCell as? KDRearrangeableCollectionViewCell {
+                kdcell.dragging = false
             }
             
+            bundle.representationImageView.removeFromSuperview()
             
-            if gesture.state == UIGestureRecognizerState.Changed {
+            // if we have a proper data source then we can reload and have the data displayed correctly
+            if let cv = self.collectionView where cv.delegate is KDRearrangeableCollectionViewDelegate {
+                cv.reloadData()
+            }
+            
+            self.bundle = nil
+        }
+        
+        let dragPointOnCanvas = gesture.locationInView(self.canvas)
+        
+        
+        switch gesture.state {
+            
+            
+        case .Began:
+            
+            bundle.sourceCell.hidden = true
+            self.canvas?.addSubview(bundle.representationImageView)
+            
+            break
+            
+        case .Changed:
+            // Update the representation image
+            var imageViewFrame = bundle.representationImageView.frame
+            var point = CGPointZero
+            point.x = dragPointOnCanvas.x - bundle.offset.x
+            point.y = dragPointOnCanvas.y - bundle.offset.y
+            imageViewFrame.origin = point
+            bundle.representationImageView.frame = imageViewFrame
+            
+            
+            let dragPointOnCollectionView = gesture.locationInView(self.collectionView)
+            
+            
+            if let indexPath : NSIndexPath = self.collectionView?.indexPathForItemAtPoint(dragPointOnCollectionView) {
                 
-                // Update the representation image
-                var imageViewFrame = bundle.representationImageView.frame
-                var point = CGPointZero
-                point.x = dragPointOnCanvas.x - bundle.offset.x
-                point.y = dragPointOnCanvas.y - bundle.offset.y
-                imageViewFrame.origin = point
-                bundle.representationImageView.frame = imageViewFrame
+                self.checkForDraggingAtTheEdgeAndAnimatePaging(gesture)
                 
                 
-                let dragPointOnCollectionView = gesture.locationInView(self.collectionView)
-                
-                
-                if let indexPath : NSIndexPath = self.collectionView?.indexPathForItemAtPoint(dragPointOnCollectionView) {
+                if indexPath.isEqual(bundle.currentIndexPath) == false {
                     
-                    
-                    
-                    self.checkForDraggingAtTheEdgeAndAnimatePaging(gesture)
-                    
-                    
-                    if indexPath.isEqual(bundle.currentIndexPath) == false {
-                        
-                        // If we have a collection view controller that implements the delegate we call the method first
-                        if let delegate = self.collectionView!.delegate as? KDRearrangeableCollectionViewDelegate {
-                            delegate.moveDataItem(bundle.currentIndexPath, toIndexPath: indexPath)
-                        }
-                        
-                        self.collectionView!.moveItemAtIndexPath(bundle.currentIndexPath, toIndexPath: indexPath)
-                        
-                        self.bundle!.currentIndexPath = indexPath
-                        
+                    // If we have a collection view controller that implements the delegate we call the method first
+                    if let delegate = self.collectionView!.delegate as? KDRearrangeableCollectionViewDelegate {
+                        delegate.moveDataItem(bundle.currentIndexPath, toIndexPath: indexPath)
                     }
                     
+                    self.collectionView!.moveItemAtIndexPath(bundle.currentIndexPath, toIndexPath: indexPath)
+                    
+                    self.bundle!.currentIndexPath = indexPath
+                    
                 }
                 
-                
             }
+            break
             
-            if gesture.state == UIGestureRecognizerState.Ended {
-                
-                bundle.sourceCell.hidden = false
-                
-                if let kdcell = bundle.sourceCell as? KDRearrangeableCollectionViewCell {
-                    kdcell.dragging = false
-                }
-                
-                bundle.representationImageView.removeFromSuperview()
-                
-                // if we have a proper data source then we can reload and have the data displayed correctly
-                if let cv = self.collectionView where cv.delegate is KDRearrangeableCollectionViewDelegate {
-                    self.collectionView!.reloadData()
-                }
-                
-                self.bundle = nil
-                
-                
-            }
+            
+        case .Ended:
+            endDraggingAction(bundle)
+            
+            break
+            
+        case .Cancelled:
+            endDraggingAction(bundle)
+            
+            break
+            
+        case .Failed:
+            endDraggingAction(bundle)
+            
+            break
+            
+            
+        case .Possible:
+            break
             
             
         }

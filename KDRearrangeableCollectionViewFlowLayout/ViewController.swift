@@ -13,6 +13,8 @@ class ViewController: UIViewController, KDRearrangeableCollectionViewDelegate, U
     
     @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var collectionViewLayout: KDRearrangeableCollectionViewFlowLayout!
+    
     lazy var data : [[String]] = {
         
         var array = [[String]]()
@@ -57,6 +59,8 @@ class ViewController: UIViewController, KDRearrangeableCollectionViewDelegate, U
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        self.collectionViewLayout.draggable = true
         
     }
     
