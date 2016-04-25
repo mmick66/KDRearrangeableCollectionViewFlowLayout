@@ -57,7 +57,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
         
         if let collectionView = self.collectionView {
 
-            let longPressGestureRecogniser = UILongPressGestureRecognizer(target: self, action: "handleGesture:")
+            let longPressGestureRecogniser = UILongPressGestureRecognizer(target: self, action: #selector(KDRearrangeableCollectionViewFlowLayout.handleGesture(_:)))
         
             longPressGestureRecogniser.minimumPressDuration = 0.2
             longPressGestureRecogniser.delegate = self

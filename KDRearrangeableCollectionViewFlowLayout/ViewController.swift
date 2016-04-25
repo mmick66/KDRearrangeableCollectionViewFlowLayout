@@ -40,9 +40,9 @@ class ViewController: UIViewController, KDRearrangeableCollectionViewDelegate, U
                     
                     if index == 20 {
                         index = 0
-                        section++
+                        section += 1
                     } else {
-                        index++
+                        index += 1
                     }
                     
                 }
