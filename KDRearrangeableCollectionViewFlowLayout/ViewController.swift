@@ -13,7 +13,7 @@ class ViewController: UIViewController, KDRearrangeableCollectionViewDelegate, U
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    @IBOutlet weak var collectionViewLayout: KDRearrangeableCollectionViewFlowLayout!
+    @IBOutlet weak var collectionViewRearrangeableLayout: KDRearrangeableCollectionViewFlowLayout!
     
     lazy var data : [[String]] = {
         
@@ -60,7 +60,7 @@ class ViewController: UIViewController, KDRearrangeableCollectionViewDelegate, U
         
         super.viewDidLoad()
         
-        self.collectionViewLayout.draggable = true
+        self.collectionViewRearrangeableLayout.draggable = true
         
     }
     

@@ -72,7 +72,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="collectionView" destination="qaL-pT-Rzj" id="5Cp-95-WUM"/>
-                        <outlet property="collectionViewLayout" destination="2AE-sh-i7z" id="cmT-Ww-MLp"/>
+                        <outlet property="collectionViewRearrangeableLayout" destination="2AE-sh-i7z" id="RT8-Cb-JXH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
