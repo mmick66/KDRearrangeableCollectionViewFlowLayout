@@ -12,13 +12,20 @@ import UIKit
     func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void
 }
 
-
+enum KDDraggingAxis {
+    case Free
+    case X
+    case Y
+    case XY
+}
 
 class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelegate {
     
     var animating : Bool = false
     
     var draggable : Bool = true
+    
+    
     
     var collectionViewFrameInCanvas : CGRect = CGRectZero
     
@@ -31,6 +38,8 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
             }
         }
     }
+    
+    var axis : KDDraggingAxis = .Free
     
     struct Bundle {
         var offset : CGPoint = CGPointZero
@@ -303,19 +312,42 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
             bundle.sourceCell.hidden = true
             self.canvas?.addSubview(bundle.representationImageView)
             
+            var imageViewFrame = bundle.representationImageView.frame
+            var point = CGPointZero
+            point.x = dragPointOnCanvas.x - bundle.offset.x
+            point.y = dragPointOnCanvas.y - bundle.offset.y
+            
+            imageViewFrame.origin = point
+            bundle.representationImageView.frame = imageViewFrame
+            
             break
             
         case .Changed:
             // Update the representation image
             var imageViewFrame = bundle.representationImageView.frame
-            var point = CGPointZero
-            point.x = dragPointOnCanvas.x - bundle.offset.x
-            point.y = dragPointOnCanvas.y - bundle.offset.y
+            var point = CGPoint(x: dragPointOnCanvas.x - bundle.offset.x, y: dragPointOnCanvas.y - bundle.offset.y)
+            if self.axis == .X {
+                point.y = imageViewFrame.origin.y
+            }
+            if self.axis == .Y {
+                point.x = imageViewFrame.origin.x
+            }
+            
+            
             imageViewFrame.origin = point
             bundle.representationImageView.frame = imageViewFrame
             
             
-            let dragPointOnCollectionView = gesture.locationInView(self.collectionView)
+            var dragPointOnCollectionView = gesture.locationInView(self.collectionView)
+            
+            if self.axis == .X {
+                dragPointOnCollectionView.y = bundle.representationImageView.center.y
+            }
+            if self.axis == .Y {
+                dragPointOnCollectionView.x = bundle.representationImageView.center.x
+            }
+            
+            
             
             
             if let indexPath : NSIndexPath = self.collectionView?.indexPathForItemAtPoint(dragPointOnCollectionView) {

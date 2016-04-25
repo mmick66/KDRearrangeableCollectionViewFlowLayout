@@ -62,6 +62,8 @@ class ViewController: UIViewController, KDRearrangeableCollectionViewDelegate, U
         
         self.collectionViewRearrangeableLayout.draggable = true
         
+        self.collectionViewRearrangeableLayout.axis = .Free
+        
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
