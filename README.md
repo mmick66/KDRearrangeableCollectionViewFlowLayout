@@ -29,7 +29,22 @@ func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void
 }
 ```
 
+You can stop the dragging behaviour by setting the property
+
+```Swift
+self.collectionViewRearrangeableLayout.draggable = true
+```
+
+You can constraint the axist of the drag through an enum
+
+```Swift
+self.collectionViewRearrangeableLayout.axis = .Free
+self.collectionViewRearrangeableLayout.axis = .X
+self.collectionViewRearrangeableLayout.axis = .Y
+```
+
 #### KDRearrangeableCollectionViewCell
+
 Another class that comes with this package is KDRearrangeableCollectionViewCell. It is a subclass of UICollectionViewCell and it implements a boolean property called 'dragging'. If you choose to make the cells of your collection view a subclass of KDRearrangeableCollectionViewCell this property will be set upon the start and end of the dragging and by overriding it you can set the style of the snapshot image that will be dragged around.
 
 This method will be called before the visual swap happens.
