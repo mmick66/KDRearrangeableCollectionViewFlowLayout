@@ -8,15 +8,22 @@
 
 import UIKit
 
-@objc protocol KDRearrangeableCollectionViewDelegate : UICollectionViewDelegate {
-    func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void
+protocol KDRearrangeableCollectionViewDelegate : UICollectionViewDelegate {
+    func canMoveItem(at indexPath : IndexPath) -> Bool
+    func moveDataItem(from source : IndexPath, to destination: IndexPath) -> Void
+}
+
+extension KDRearrangeableCollectionViewDelegate {
+    func canMoveItem(at indexPath : IndexPath) -> Bool {
+        return true
+    }
 }
 
 enum KDDraggingAxis {
-    case Free
-    case X
-    case Y
-    case XY
+    case free
+    case x
+    case y
+    case xy
 }
 
 class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGestureRecognizerDelegate {
@@ -27,7 +34,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
     
     
     
-    var collectionViewFrameInCanvas : CGRect = CGRectZero
+    var collectionViewFrameInCanvas : CGRect = CGRect.zero
     
     var hitTestRectagles = [String:CGRect]()
   
@@ -39,13 +46,13 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
         }
     }
     
-    var axis : KDDraggingAxis = .Free
+    var axis : KDDraggingAxis = .free
     
     struct Bundle {
-        var offset : CGPoint = CGPointZero
+        var offset : CGPoint = CGPoint.zero
         var sourceCell : UICollectionViewCell
         var representationImageView : UIView
-        var currentIndexPath : NSIndexPath
+        var currentIndexPath : IndexPath
     }
     var bundle : Bundle?
     
@@ -85,12 +92,12 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
         }
     }
     
-    override func prepareLayout() {
-        super.prepareLayout()
+    override func prepare() {
+        super.prepare()
         self.calculateBorders()
     }
     
-    private func calculateBorders() {
+    fileprivate func calculateBorders() {
         
         if let collectionView = self.collectionView {
             
@@ -98,7 +105,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
             
             
             if self.canvas != collectionView.superview {
-                collectionViewFrameInCanvas = self.canvas!.convertRect(collectionViewFrameInCanvas, fromView: collectionView)
+                collectionViewFrameInCanvas = self.canvas!.convert(collectionViewFrameInCanvas, from: collectionView)
             }
             
             
@@ -120,8 +127,6 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
             bottomRect.size.height = 20.0
             hitTestRectagles["bottom"] = bottomRect
             
-           
-            
             
         }
         
@@ -131,49 +136,59 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
     
     // MARK: - UIGestureRecognizerDelegate
    
-    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         
         if draggable == false {
             return false
         }
         
-        if  let ca = self.canvas,
-            let cv = self.collectionView {
+        guard let ca = self.canvas else {
+            return false
+        }
+        
+        guard let cv = self.collectionView else {
+            return false
+        }
+        
+        let pointPressedInCanvas = gestureRecognizer.location(in: ca)
+        
+        for cell in cv.visibleCells {
+            
+            guard let indexPath:IndexPath = cv.indexPath(for: cell) else {
+                return false
+            }
+            
+            let cellInCanvasFrame = ca.convert(cell.frame, from: cv)
+            
+            if cellInCanvasFrame.contains(pointPressedInCanvas ) {
                 
-                let pointPressedInCanvas = gestureRecognizer.locationInView(ca)
-                
-                for cell in cv.visibleCells() {
-                    
-                    let cellInCanvasFrame = ca.convertRect(cell.frame, fromView: cv)
-                    
-                    if CGRectContainsPoint(cellInCanvasFrame, pointPressedInCanvas ) {
-                        
-                        if let kdcell = cell as? KDRearrangeableCollectionViewCell {
-                            // Override he dragging setter to apply and change in style that you want
-                            kdcell.dragging = true
-                        }
-                        
-                        
-                        UIGraphicsBeginImageContextWithOptions(cell.bounds.size, cell.opaque, 0)
-                        cell.layer.renderInContext(UIGraphicsGetCurrentContext()!)
-                        let img = UIGraphicsGetImageFromCurrentImageContext()
-                        UIGraphicsEndImageContext()
-                        
-                        let representationImage = UIImageView(image: img)
-                        
-                        representationImage.frame = cellInCanvasFrame
-                        
-                        let offset = CGPointMake(pointPressedInCanvas.x - cellInCanvasFrame.origin.x, pointPressedInCanvas.y - cellInCanvasFrame.origin.y)
-                        
-                        let indexPath : NSIndexPath = cv.indexPathForCell(cell as UICollectionViewCell)!
-                        
-                        self.bundle = Bundle(offset: offset, sourceCell: cell, representationImageView:representationImage, currentIndexPath: indexPath)
-                        
-                        
-                        break
+                if cv.delegate is KDRearrangeableCollectionViewDelegate {
+                    let d = cv.delegate as! KDRearrangeableCollectionViewDelegate
+                    if d.canMoveItem(at: indexPath) == false {
+                        return false
                     }
-                    
                 }
+                
+                if let kdcell = cell as? KDRearrangeableCollectionViewCell {
+                    // Override he dragging setter to apply and change in style that you want
+                    kdcell.dragging = true
+                }
+                
+                UIGraphicsBeginImageContextWithOptions(cell.bounds.size, cell.isOpaque, 0)
+                cell.layer.render(in: UIGraphicsGetCurrentContext()!)
+                let img = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                
+                let representationImage = UIImageView(image: img)
+                
+                representationImage.frame = cellInCanvasFrame
+                
+                let offset = CGPoint(x: pointPressedInCanvas.x - cellInCanvasFrame.origin.x, y: pointPressedInCanvas.y - cellInCanvasFrame.origin.y)
+                
+                self.bundle = Bundle(offset: offset, sourceCell: cell, representationImageView:representationImage, currentIndexPath: indexPath)
+                
+                break
+            }
             
         }
         
@@ -182,7 +197,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
     
     
     
-    func checkForDraggingAtTheEdgeAndAnimatePaging(gestureRecognizer: UILongPressGestureRecognizer) {
+    func checkForDraggingAtTheEdgeAndAnimatePaging(_ gestureRecognizer: UILongPressGestureRecognizer) {
         
         if self.animating == true {
             return
@@ -193,9 +208,9 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
            
             var nextPageRect : CGRect = self.collectionView!.bounds
             
-            if self.scrollDirection == UICollectionViewScrollDirection.Horizontal {
+            if self.scrollDirection == UICollectionViewScrollDirection.horizontal {
                 
-                if CGRectIntersectsRect(bundle.representationImageView.frame, hitTestRectagles["left"]!) {
+                if bundle.representationImageView.frame.intersects(hitTestRectagles["left"]!) {
                    
                     nextPageRect.origin.x -= nextPageRect.size.width
                     
@@ -206,7 +221,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                     }
                     
                 }
-                else if CGRectIntersectsRect(bundle.representationImageView.frame, hitTestRectagles["right"]!) {
+                else if bundle.representationImageView.frame.intersects(hitTestRectagles["right"]!) {
                   
                     nextPageRect.origin.x += nextPageRect.size.width
                     
@@ -219,10 +234,10 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                 
                 
             }
-            else if self.scrollDirection == UICollectionViewScrollDirection.Vertical {
+            else if self.scrollDirection == UICollectionViewScrollDirection.vertical {
                 
                 
-                if CGRectIntersectsRect(bundle.representationImageView.frame, hitTestRectagles["top"]!) {
+                if bundle.representationImageView.frame.intersects(hitTestRectagles["top"]!) {
                     
                     
                     nextPageRect.origin.y -= nextPageRect.size.height
@@ -234,7 +249,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                     }
                     
                 }
-                else if CGRectIntersectsRect(bundle.representationImageView.frame, hitTestRectagles["bottom"]!) {
+                else if bundle.representationImageView.frame.intersects(hitTestRectagles["bottom"]!) {
                    
                     nextPageRect.origin.y += nextPageRect.size.height
                     
@@ -249,12 +264,12 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
                 
             }
             
-            if !CGRectEqualToRect(nextPageRect, self.collectionView!.bounds){
+            if !nextPageRect.equalTo(self.collectionView!.bounds){
                 
                 
-                let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.8 * Double(NSEC_PER_SEC)))
+                let delayTime = DispatchTime.now() + Double(Int64(0.8 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                 
-                dispatch_after(delayTime, dispatch_get_main_queue(), {
+                DispatchQueue.main.asyncAfter(deadline: delayTime, execute: {
                     
                     self.animating = false
                     
@@ -275,7 +290,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
       
     }
     
-    func handleGesture(gesture: UILongPressGestureRecognizer) -> Void {
+    func handleGesture(_ gesture: UILongPressGestureRecognizer) -> Void {
         
     
         guard let bundle = self.bundle else {
@@ -283,9 +298,9 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
         }
 
         
-        func endDraggingAction(bundle: Bundle) {
+        func endDraggingAction(_ bundle: Bundle) {
             
-            bundle.sourceCell.hidden = false
+            bundle.sourceCell.isHidden = false
             
             if let kdcell = bundle.sourceCell as? KDRearrangeableCollectionViewCell {
                 kdcell.dragging = false
@@ -294,26 +309,26 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
             bundle.representationImageView.removeFromSuperview()
             
             // if we have a proper data source then we can reload and have the data displayed correctly
-            if let cv = self.collectionView where cv.delegate is KDRearrangeableCollectionViewDelegate {
+            if let cv = self.collectionView, cv.delegate is KDRearrangeableCollectionViewDelegate {
                 cv.reloadData()
             }
             
             self.bundle = nil
         }
         
-        let dragPointOnCanvas = gesture.locationInView(self.canvas)
+        let dragPointOnCanvas = gesture.location(in: self.canvas)
         
         
         switch gesture.state {
             
             
-        case .Began:
+        case .began:
             
-            bundle.sourceCell.hidden = true
+            bundle.sourceCell.isHidden = true
             self.canvas?.addSubview(bundle.representationImageView)
             
             var imageViewFrame = bundle.representationImageView.frame
-            var point = CGPointZero
+            var point = CGPoint.zero
             point.x = dragPointOnCanvas.x - bundle.offset.x
             point.y = dragPointOnCanvas.y - bundle.offset.y
             
@@ -322,14 +337,14 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
             
             break
             
-        case .Changed:
+        case .changed:
             // Update the representation image
             var imageViewFrame = bundle.representationImageView.frame
             var point = CGPoint(x: dragPointOnCanvas.x - bundle.offset.x, y: dragPointOnCanvas.y - bundle.offset.y)
-            if self.axis == .X {
+            if self.axis == .x {
                 point.y = imageViewFrame.origin.y
             }
-            if self.axis == .Y {
+            if self.axis == .y {
                 point.x = imageViewFrame.origin.x
             }
             
@@ -338,31 +353,31 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
             bundle.representationImageView.frame = imageViewFrame
             
             
-            var dragPointOnCollectionView = gesture.locationInView(self.collectionView)
+            var dragPointOnCollectionView = gesture.location(in: self.collectionView)
             
-            if self.axis == .X {
+            if self.axis == .x {
                 dragPointOnCollectionView.y = bundle.representationImageView.center.y
             }
-            if self.axis == .Y {
+            if self.axis == .y {
                 dragPointOnCollectionView.x = bundle.representationImageView.center.x
             }
             
             
             
             
-            if let indexPath : NSIndexPath = self.collectionView?.indexPathForItemAtPoint(dragPointOnCollectionView) {
+            if let indexPath : IndexPath = self.collectionView?.indexPathForItem(at: dragPointOnCollectionView) {
                 
                 self.checkForDraggingAtTheEdgeAndAnimatePaging(gesture)
                 
                 
-                if indexPath.isEqual(bundle.currentIndexPath) == false {
+                if (indexPath == bundle.currentIndexPath) == false {
                     
                     // If we have a collection view controller that implements the delegate we call the method first
                     if let delegate = self.collectionView!.delegate as? KDRearrangeableCollectionViewDelegate {
-                        delegate.moveDataItem(bundle.currentIndexPath, toIndexPath: indexPath)
+                        delegate.moveDataItem(from: bundle.currentIndexPath, to: indexPath)
                     }
                     
-                    self.collectionView!.moveItemAtIndexPath(bundle.currentIndexPath, toIndexPath: indexPath)
+                    self.collectionView!.moveItem(at: bundle.currentIndexPath, to: indexPath)
                     
                     self.bundle!.currentIndexPath = indexPath
                     
@@ -372,23 +387,23 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
             break
             
             
-        case .Ended:
+        case .ended:
             endDraggingAction(bundle)
             
             break
             
-        case .Cancelled:
+        case .cancelled:
             endDraggingAction(bundle)
             
             break
             
-        case .Failed:
+        case .failed:
             endDraggingAction(bundle)
             
             break
             
             
-        case .Possible:
+        case .possible:
             break
             
             

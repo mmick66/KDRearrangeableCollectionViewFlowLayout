@@ -28,7 +28,6 @@ class KDRearrangeableCollectionViewCell: UICollectionViewCell {
     }
     
     
-    
     var dragging : Bool = false {
 
         didSet {
@@ -36,7 +35,7 @@ class KDRearrangeableCollectionViewCell: UICollectionViewCell {
             if dragging == true {
                 
                 self.baseBackgroundColor = self.backgroundColor
-                self.backgroundColor = UIColor.redColor()
+                self.backgroundColor = UIColor.red
                 
             } else {
                 
