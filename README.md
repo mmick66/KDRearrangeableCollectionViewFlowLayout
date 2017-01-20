@@ -13,7 +13,7 @@ Tip: For drag and drop **between** multiple collection views look at the project
 
 ![Storyboard Illustration](http://s17.postimg.org/4pimesmen/Screen_Shot_2016_01_04_at_17_45_54.png)
 
-3. Make the data source of your UICollectionView to be *KDRearrangeableCollectionViewDelegate* subclass and implement the only method there.
+3. Make the data source of your UICollectionView to be *KDRearrangeableCollectionViewDelegate* subclass and implement the one mandatory method there.
 
 ```Swift
 func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void
@@ -29,13 +29,13 @@ func moveDataItem(fromIndexPath : NSIndexPath, toIndexPath: NSIndexPath) -> Void
 }
 ```
 
-You can stop the dragging behaviour by setting the property
+#### You can stop the dragging behaviour by setting the property
 
 ```Swift
 self.collectionViewRearrangeableLayout.draggable = true
 ```
 
-You can constraint the axist of the drag through an enum
+#### You can constraint the axist of the drag through an enum
 
 ```Swift
 self.collectionViewRearrangeableLayout.axis = .Free
@@ -43,7 +43,13 @@ self.collectionViewRearrangeableLayout.axis = .X
 self.collectionViewRearrangeableLayout.axis = .Y
 ```
 
-#### KDRearrangeableCollectionViewCell
+#### You can prevent the of any cell by implementing:
+
+```Swift
+func canMoveItem(at indexPath : IndexPath) -> Bool
+```
+
+### KDRearrangeableCollectionViewCell
 
 Another class that comes with this package is KDRearrangeableCollectionViewCell. It is a subclass of UICollectionViewCell and it implements a boolean property called 'dragging'. If you choose to make the cells of your collection view a subclass of KDRearrangeableCollectionViewCell this property will be set upon the start and end of the dragging and by overriding it you can set the style of the snapshot image that will be dragged around.
 
