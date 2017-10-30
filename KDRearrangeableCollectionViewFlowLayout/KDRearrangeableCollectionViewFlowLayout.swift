@@ -290,7 +290,7 @@ class KDRearrangeableCollectionViewFlowLayout: UICollectionViewFlowLayout, UIGes
       
     }
     
-    func handleGesture(_ gesture: UILongPressGestureRecognizer) -> Void {
+    @objc func handleGesture(_ gesture: UILongPressGestureRecognizer) -> Void {
         
     
         guard let bundle = self.bundle else {

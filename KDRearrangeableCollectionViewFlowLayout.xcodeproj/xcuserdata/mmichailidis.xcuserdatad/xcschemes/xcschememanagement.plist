@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Demo App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
 		<key>KDRearrangeableCollectionViewFlowLayout.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
