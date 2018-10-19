@@ -53,6 +53,3 @@ Another class that comes with this package is KDRearrangeableCollectionViewCell.
 
 This method will be called before the visual swap happens.
 
-### Make One Yourself ###
-
-Please have a look at the [article](http://karmadust.com/?p=5) for a full explanation.
