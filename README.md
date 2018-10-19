@@ -11,8 +11,6 @@ Tip: For drag and drop **between** multiple collection views look at the project
 1. Add the *KDRearrangeableCollectionViewFlowLayout.swift* file to your project (it is the only file you need).
 2. Set the layout of your UICollectionView to be the one in the file above. This can be done either programmatically or through the Storyboard.
 
-![Storyboard Illustration](http://s17.postimg.org/4pimesmen/Screen_Shot_2016_01_04_at_17_45_54.png)
-
 3. Make the data source of your UICollectionView to be *KDRearrangeableCollectionViewDelegate* subclass and implement the one mandatory method there.
 
 ```Swift
